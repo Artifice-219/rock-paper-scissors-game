@@ -1,67 +1,222 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="game-ui.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="game-ui.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <p id="sample">dadsadsa</p>
 
     <div class="computer-side">
-        <p>Computer</p>
-        <div class="image-wrapper"></div>
+      <p>Computer</p>
+      <div class="image-wrapper" id="computer_choice_img">ajshdha</div>
     </div>
     <div class="separator">
-        <p>this paragraph will indicate who wins like in the reference UI</p>
+      <p>Make a choice</p>
     </div>
     <div class="player-side">
-        <p>Player</p>
-        <div class="life">
-            <div class="heart-image">
-                <img src="assets/heart.jpg" alt="">
-            </div>
-            <p>3</p>
+      <p>Player</p>
+      <div class="life">
+        <div class="heart-image">
+          <img src="assets/heart.jpg" alt="" />
         </div>
-        <div class="image-wrapper"></div>
-        <div class="score-wrapper">
-            <p>Youre score : [modify this part] </p>
-        </div>
+        <p>3</p>
+      </div>
+      <div class="image-wrapper"></div>
+      <div class="score-wrapper">
+        <p>Youre score : [modify this part]</p>
+      </div>
     </div>
 
     <div class="choice">
-        <div class="paper">
-            <img src="assets/open palm hands.jpg" alt="">
-        </div>
-        <div class="rock">
-            <img src="assets/rock hans.jpg" alt="">
-        </div>
-        <div class="scissor">
-            <img src="assets/scissor hands.jpg" alt="">
-        </div>
+      <div class="paper">
+        <img
+          src="assets/open palm hands.jpg"
+          alt=""
+          onclick="player_choice('hands')"
+        />
+      </div>
+      <div class="rock">
+        <img
+          src="assets/rock hans.jpg"
+          alt=""
+          onclick="player_choice('rock')"
+        />
+      </div>
+      <div class="scissor">
+        <img
+          src="assets/scissor hands.jpg"
+          alt=""
+          onclick="player_choice('scissor')"
+        />
+      </div>
     </div>
 
+    <!-- make a player object -->
     <script>
-        // function that generates random number from 1-3
-function generate_num(){
-  return Math.round(Math.random() * 2) + 1;
-}
+      class Player {
+        #user_name;
+        #score = 0;
+        #life = 3;
+        // use this varianble to do operations regarding the user choice
+        #user_choice;
+        constructor(user_name) {
+          this.#user_name = user_name;
+        }
 
-        const computer = new Computer();
-        // computer make a choice
-        computer.choice(generate_num());
-        
-        let num = generate_num();
+        // getters
+        get choice() {
+          return this.#user_choice;
+        }
+        get name() {
+          return this.#user_name;
+        }
 
-    alert(num);
+        get score() {
+          return this.#score;
+        }
 
-     // Display the generated number in the HTML
-     document.getElementById('sample').innerHTML = num;
+        get life() {
+          return this.#life;
+        }
+        // setters
+        set choice(user_choice) {
+          this.#user_choice = user_choice;
+        }
 
-     console.log("askdkas");
+        // methods
+        decrement_life() {
+          this.#life -= 1;
+        }
+        increment_score() {
+          this.#score += 1;
+        }
 
+        decrement_score() {
+          this.#score -= 1;
+        }
+      }
     </script>
 
-<script src="script.js"></script>
-</body>
+    <!--  make a computer object -->
+    <script>
+      class Computer {
+        #name = "Computer";
+        #score = 0;
+        #life = 3;
+        // use this varianble to do operations regarding the computer choice
+        #computer_choice;
+
+        // getters
+        get choice() {
+          return this.#computer_choice;
+        }
+
+        get name() {
+          return this.#name;
+        }
+
+        get score() {
+          return this.#score;
+        }
+
+        get life() {
+          return this.#life;
+        }
+        // setters
+        set choice(computer_choice) {
+          this.#computer_choice = computer_choice;
+        }
+
+        // methods
+        decrement_life() {
+          this.#life -= 1;
+        }
+        increment_score() {
+          this.#score += 1;
+        }
+
+        decrememt_score() {
+          this.#score -= 1;
+        }
+      }
+    </script>
+
+    <script>
+      // function that generates random number from 1-3
+      function generate_num() {
+        return Math.round(Math.random() * 2) + 1;
+      }
+
+      function choice_associate(number) {
+        switch (number) {
+          case 1:
+            return "paper";
+          case 2:
+            return "rock";
+          case 3:
+            return "scissors";
+        }
+      }
+    </script>
+
+    <script>
+      // instantiate a computer object
+      let computer = new Computer();
+      // make the computer object make a choice
+      // first generate a random number
+      let random_num = generate_num();
+      // associate that number and make it as the computer choice
+      computer.choice = choice_associate(random_num);
+    </script>
+
+    <script>
+      // instantiate a new Player object
+      let player = new Player();
+      // for the choice images
+      function player_choice(choice) {
+        player.choice = choice;
+        // revealing the computer choice
+        let com_choice = computer.choice;
+
+        alert(" A player made a choice" + player.choice);
+        alert("Computer choice is " + "    " + computer.choice);
+
+        computer_reveal(com_choice);
+      }
+
+      // this function will associate a file source accoridng to the player choice, image will be
+      //displayed
+
+      function image_src(value) {
+        switch (value) {
+          case "rock":
+            return "assets/rock hans.jpg";
+          case "paper":
+            return "assets/open palm hands.jpg";
+          case "scissors":
+            return "assets/scissor hands.jpg";
+            break;
+        }
+      }
+      // this function will reveal the computer choice should only be called after the user makes a choice
+      function computer_reveal(choice) {
+        let image_source = image_src(choice);
+
+        // getting the div where the image will be displayed
+        let div = document.getElementById("computer_choice_img");
+        // creating a new image element and linking the image
+        const img = document.createElement("img");
+        img.src = image_source;
+
+        // clear the content of the div
+        div.innerHTML = "";
+
+        // append the new elemtn to the div
+
+        div.appendChild(img);
+      }
+    </script>
+  </body>
 </html>
