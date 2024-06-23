@@ -1,73 +1,174 @@
-body{
+body {
     display: flex;
     flex-direction: column;
-    width: 100vh;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Use min-height instead of height for flexibility */
     background-color: greenyellow;
-}
-
-.computer-side{
-    position: relative;
-    left:40% ;
+  }
+  
+  .computer-side,
+  .player-side {
+    position: absolute;
+    top: 2px;
     display: flex;
     flex-direction: column;
-}
-
-.player-side{
-    position: relative;
-    left:40% ;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1px;
-}
-
-.image-wrapper{
+    align-items: center; /* Center items horizontally */
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.6rem;
+  }
+  
+  .computer-side {
+    left: 100px;
+  }
+  
+  .player-side {
+    right: 100px;
+  }
+  
+  .image-wrapper {
     height: 100px;
     width: 100px;
     border: 2px dashed black;
+    margin-bottom: 10px; /* Add some spacing */
     background-color: transparent;
-}
-
-.separator{
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    background-color: orange;
-}
-
-.choice{
+  }
+  
+  .separator {
+    position: absolute;
+    bottom: 150px;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    border-radius: 15px;
+    width: 90%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: black;
+    background-color: orange;
+  }
+  
+  .choice {
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    justify-content: center; /* Center items horizontally */
     gap: 20px;
-}
-
-.choice .paper{
-    margin-left: 30%;
-}
-
-img{
+    padding: 5px;
     height: auto;
-    width: 100px;
-}
-
-.winning-prompt{
+  }
+  
+  .choice .paper {
+    margin-left: auto; /* Adjust margin for better alignment */
+    margin-right: auto; /* Adjust margin for better alignment */
+  }
+  
+  img {
+    max-width: 100px; /* Limit image width */
+    height: auto;
+    width: auto; /* Maintain aspect ratio */
+  }
+  
+  .winning-prompt,
+  .losing-prompt {
     position: absolute;
     display: none;
     top: 10%;
-    left: 20%;
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
     padding: 10px;
     background-color: aliceblue;
     height: 80%;
     width: 60%;
+    max-width: 600px; /* Limit max width */
     border-radius: 20px;
-}
-
-.losing-prompt{
+  }
+  
+  .heart-image {
     position: absolute;
-    display: none;
-    top: 10%;
-    left: 20%;
-    padding: 10px;
-    background-color: aliceblue;
-    height: 80%;
-    width: 60%;
-    border-radius: 20px;
-}
+    left: 2px;
+    background-color: green;
+    height: 40px;
+    width: 40px;
+  }
+  
+  .heart-image img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Maintain aspect ratio; cover entire container */
+    object-position: center; /* Center the image within the container */
+    display: block; /* Remove any extra space from inline elements */
+  }
+  
+  @media (max-width: 414px) {
+    body {
+      background-color: green; /* Override background color for smaller screens */
+    }
+  
+    .computer-side,
+    .player-side {
+      position: absolute;
+      top: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center items horizontally */
+      padding: 10px; /* Adjust padding for smaller screens */
+      font-size: 1.3rem; /* Adjust font size for smaller screens */
+    }
+  
+    .computer-side {
+      left: 20px; /* Adjust left position for smaller screens */
+    }
+  
+    .player-side {
+      right: 60px; /* Adjust right position for smaller screens */
+    }
+  
+    .separator {
+      position: absolute;
+      bottom: 450px; /* Adjust bottom position for smaller screens */
+      left: 8%;
+      width: 70%;
+      font-size: 1rem; /* Adjust font size for smaller screens */
+    }
+  
+    .choice {
+      position: absolute;
+      bottom: 350px; /* Adjust bottom position for smaller screens */
+      gap: 10px; /* Adjust gap for smaller screens */
+      left: 10%;
+    }
+  
+    .choice .paper {
+      margin-left: auto; /* Adjust margin for better alignment */
+      margin-right: auto; /* Adjust margin for better alignment */
+    }
+  
+    img {
+      max-width: 80px; /* Limit image width for smaller screens */
+    }
+  
+    .winning-prompt,
+    .losing-prompt {
+      top: 10px; /* Adjust top position for smaller screens */
+      padding: 5px; /* Adjust padding for smaller screens */
+      height: 80%; /* Adjust height for smaller screens */
+      width: 60%; /* Adjust width for smaller screens */
+      max-width: 400px; /* Limit max width for smaller screens */
+      left: 45%;
+    }
+  
+    .heart-image {
+      position: absolute;
+      left: 20px;
+      top: 90px; /* Adjust top position for smaller screens */
+      height: 30px; /* Adjust height for smaller screens */
+      width: 30px; /* Adjust width for smaller screens */
+    }
+  }
+  
