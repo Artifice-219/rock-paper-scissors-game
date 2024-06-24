@@ -105,6 +105,30 @@ body {
     display: block; /* Remove any extra space from inline elements */
   }
 
+
+  .winning-img{
+    z-index: -1;
+  }
+
+  .winning-img img{
+    position: relative;
+    left: 40%;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+
+  }
+
+  button{
+    height: 50px;
+    width: 100px;
+    border:none ;
+    border-radius: 40px;
+margin: 5px;
+    background-color: orange;
+  }
+  
   
 
   

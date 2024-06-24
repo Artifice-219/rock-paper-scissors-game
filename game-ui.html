@@ -1,287 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="game-ui.css" />
-  <title>Rock Paper Scissors Game</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="game-ui.css" />
+    <title>Rock Paper Scissors Game</title>
+  </head>
+  <body>
+    <div class="computer-side">
+      <p>Computer</p>
+      <div class="image-wrapper" id="computer_choice_img"></div>
+    </div>
 
-  <div class="computer-side">
-    <p>Computer</p>
-    <div class="image-wrapper" id="computer_choice_img"></div>
-  </div>
+    <div class="separator">
+      <p id="separator-text">Make a choice</p>
+    </div>
 
-  <div class="separator">
-    <p id="separator-text">Make a choice</p>
-  </div>
-
-  <div class="player-side">
-    <p>Player</p>
-    <div class="life">
-      <div class="heart-image">
-        <img src="assets/heart-removebg-preview.png" alt="" />
+    <div class="player-side">
+      <p>Player</p>
+      <div class="life">
+        <div class="heart-image">
+          <img src="assets/heart-removebg-preview.png" alt="" />
+        </div>
+        <p id="player-life">3</p>
       </div>
-      <p>3</p>
+      <div class="image-wrapper" id="player_choice_img"></div>
+      <div class="score-wrapper">
+        <p>Your score: <span id="player-score">0</span></p>
+      </div>
     </div>
-    <div class="image-wrapper" id="player_choice_img"></div>
-    <div class="score-wrapper">
-      <p>Your score: <span id="player-score">0</span></p>
+
+    <div class="choice">
+      <div class="paper">
+        <img
+          src="assets/open palm hands.jpg"
+          alt="hands"
+          onclick="player_choice('paper')"
+        />
+      </div>
+      <div class="rock">
+        <img
+          src="assets/rock hans.jpg"
+          alt="rock-hand-sign"
+          onclick="player_choice('rock')"
+        />
+      </div>
+      <div class="scissor">
+        <img
+          src="assets/scissor hands.jpg"
+          alt="scissor-hand-sign"
+          onclick="player_choice('scissors')"
+        />
+      </div>
     </div>
-  </div>
 
-
-  <div class="choice">
-    <div class="paper">
-      <img src="assets/open palm hands.jpg" alt="hands" onclick="player_choice('paper')" />
+    <!-- UI's for the winners -->
+    <div class="winning-prompt">
+      <div class="winning-img">
+        <img src="assets/thropy-removebg-preview.png" alt="" />
+      </div>
+      <p>Congratulatons You Won</p>
+      <div class="navigation">
+        <a href="index.html">
+          <button>Play Again</button>
+        </a>
+        <button>Exit</button>
+      </div>
     </div>
-    <div class="rock">
-      <img src="assets/rock hans.jpg" alt="rock-hand-sign" onclick="player_choice('rock')" />
+
+    <div class="losing-prompt">
+      <div class="losing-img">
+        <img src="assets/you-lose.jpg" alt="">
+      </div>
+      <p>Oops Loser</p>
+      <div class="navigation">
+        <a href="index.html">
+          <button>Play Again</button>
+        </a>
+        <button>Exit</button>
+      </div>
     </div>
-    <div class="scissor">
-      <img src="assets/scissor hands.jpg" alt="scissor-hand-sign" onclick="player_choice('scissors')" />
-    </div>
-  </div>
 
-  <!-- UI's for the winners -->
-   <div class="winning-prompt">
-    <p>Congratulatons You Won</p>
-    <div class="navigation">
-      <button>Play Again</button>
-      <button>Exit</button>
-    </div>
-   </div>   
+    <!-- Player class definition -->
+    <script>
+      class Player {
+        #user_name;
+        #score = 0;
+        #life = 3;
+        #user_choice;
 
-   <div class="losing-prompt">
-    <p>Oops Loser </p>
-    <div class="navigation">
-      <button>Play Again</button>
-      <button>Exit</button>
-    </div> 
-   </div>
+        constructor(user_name) {
+          this.#user_name = user_name;
+        }
 
-  <!-- Player class definition -->
-  <script>
-    class Player {
-      #user_name;
-      #score = 0;
-      #life = 3;
-      #user_choice;
+        // Getters
+        get choice() {
+          return this.#user_choice;
+        }
+        get name() {
+          return this.#user_name;
+        }
+        get score() {
+          return this.#score;
+        }
+        get life() {
+          return this.#life;
+        }
 
-      constructor(user_name) {
-        this.#user_name = user_name;
+        // Setters
+        set choice(user_choice) {
+          this.#user_choice = user_choice;
+        }
+
+        set score(value) {
+          // This should only be called to make sure player score remains valid
+          // Must not be used to increase or decrease score in-game
+          this.#score = value;
+        }
+
+        // Methods
+        decrement_life() {
+          this.#life -= 1;
+        }
+        increment_score() {
+          this.#score += 1;
+        }
+        decrement_score() {
+          this.#score -= 1;
+        }
+      }
+    </script>
+
+    <!-- Computer class definition -->
+    <script>
+      class Computer {
+        #name = "Computer";
+        #score = 0;
+        #life = 3;
+        #computer_choice;
+
+        // Getters
+        get choice() {
+          return this.#computer_choice;
+        }
+        get name() {
+          return this.#name;
+        }
+        get score() {
+          return this.#score;
+        }
+        get life() {
+          return this.#life;
+        }
+
+        // Setters
+        set choice(computer_choice) {
+          this.#computer_choice = computer_choice;
+        }
+
+        // Methods
+        decrement_life() {
+          this.#life -= 1;
+        }
+        increment_score() {
+          this.#score += 1;
+        }
+        decrement_score() {
+          this.#score -= 1;
+        }
+      }
+    </script>
+
+    <!-- Helper functions -->
+    <script>
+      // Generate a random number from 1-3
+      function generate_num() {
+        return Math.round(Math.random() * 2) + 1;
       }
 
-      // Getters
-      get choice() {
-        return this.#user_choice;
+      // Associate the number with a choice
+      function choice_associate(number) {
+        switch (number) {
+          case 1:
+            return "paper";
+          case 2:
+            return "rock";
+          case 3:
+            return "scissors";
+        }
       }
-      get name() {
-        return this.#user_name;
-      }
-      get score() {
-        return this.#score;
-      }
-      get life() {
-        return this.#life;
-      }
+    </script>
 
-      // Setters
-      set choice(user_choice) {
-        this.#user_choice = user_choice;
-      }
+    <!-- Instantiate computer object -->
+    <script>
+      let computer = new Computer();
+    </script>
 
-      set score(value) {
-        // This should only be called to make sure player score remains valid
-        // Must not be used to increase or decrease score in-game
-        this.#score = value;
-      }
+    <!-- Main game logic -->
+    <script>
+      // Instantiate a new Player object
+      let player = new Player("Player");
 
-      // Methods
-      decrement_life() {
-        this.#life -= 1;
-      }
-      increment_score() {
-        this.#score += 1;
-      }
-      decrement_score() {
-        this.#score -= 1;
-      }
-    }
-  </script>
+      function player_choice(choice) {
+        player.choice = choice;
+        // Generate and set the computer's choice
+        let random_num = generate_num();
+        computer.choice = choice_associate(random_num);
 
-  <!-- Computer class definition -->
-  <script>
-    class Computer {
-      #name = "Computer";
-      #score = 0;
-      #life = 3;
-      #computer_choice;
+        // Display choices
+        display_choices();
 
-      // Getters
-      get choice() {
-        return this.#computer_choice;
-      }
-      get name() {
-        return this.#name;
-      }
-      get score() {
-        return this.#score;
-      }
-      get life() {
-        return this.#life;
+        // Determine the winner
+        let result = who_wins();
+        update_game_result(result);
       }
 
-      // Setters
-      set choice(computer_choice) {
-        this.#computer_choice = computer_choice;
+      function image_src(value) {
+        switch (value) {
+          case "rock":
+            return "assets/rock hans.jpg";
+          case "paper":
+            return "assets/open palm hands.jpg";
+          case "scissors":
+            return "assets/scissor hands.jpg";
+        }
       }
 
-      // Methods
-      decrement_life() {
-        this.#life -= 1;
-      }
-      increment_score() {
-        this.#score += 1;
-      }
-      decrement_score() {
-        this.#score -= 1;
-      }
-    }
-  </script>
+      function display_choices() {
+        let player_image_src = image_src(player.choice);
+        let computer_image_src = image_src(computer.choice);
 
-  <!-- Helper functions -->
-  <script>
-    // Generate a random number from 1-3
-    function generate_num() {
-      return Math.round(Math.random() * 2) + 1;
-    }
+        // Display player's choice
+        let player_div = document.getElementById("player_choice_img");
+        player_div.innerHTML = "";
+        let player_img = document.createElement("img");
+        player_img.src = player_image_src;
+        player_div.appendChild(player_img);
 
-    // Associate the number with a choice
-    function choice_associate(number) {
-      switch (number) {
-        case 1:
-          return "paper";
-        case 2:
-          return "rock";
-        case 3:
-          return "scissors";
-      }
-    }
-  </script>
-
-  <!-- Instantiate computer object -->
-  <script>
-    let computer = new Computer();
-  </script>
-
-  <!-- Main game logic -->
-  <script>
-    // Instantiate a new Player object
-    let player = new Player("Player");
-
-    function player_choice(choice) {
-      player.choice = choice;
-      // Generate and set the computer's choice
-      let random_num = generate_num();
-      computer.choice = choice_associate(random_num);
-
-      // Display choices
-      display_choices();
-
-      // Determine the winner
-      let result = who_wins();
-      update_game_result(result);
-    }
-
-    function image_src(value) {
-      switch (value) {
-        case "rock":
-          return "assets/rock hans.jpg";
-        case "paper":
-          return "assets/open palm hands.jpg";
-        case "scissors":
-          return "assets/scissor hands.jpg";
-      }
-    }
-
-    function display_choices() {
-      let player_image_src = image_src(player.choice);
-      let computer_image_src = image_src(computer.choice);
-
-      // Display player's choice
-      let player_div = document.getElementById("player_choice_img");
-      player_div.innerHTML = "";
-      let player_img = document.createElement("img");
-      player_img.src = player_image_src;
-      player_div.appendChild(player_img);
-
-      // Display computer's choice
-      let computer_div = document.getElementById("computer_choice_img");
-      computer_div.innerHTML = "";
-      let computer_img = document.createElement("img");
-      computer_img.src = computer_image_src;
-      computer_div.appendChild(computer_img);
-    }
-
-    function who_wins() {
-      let p_choice = player.choice;
-      let c_choice = computer.choice;
-
-      if (p_choice === c_choice) {
-        return 0; // It's a tie
+        // Display computer's choice
+        let computer_div = document.getElementById("computer_choice_img");
+        computer_div.innerHTML = "";
+        let computer_img = document.createElement("img");
+        computer_img.src = computer_image_src;
+        computer_div.appendChild(computer_img);
       }
 
-      if (
-        (p_choice === "rock" && c_choice === "scissors") ||
-        (p_choice === "scissors" && c_choice === "paper") ||
-        (p_choice === "paper" && c_choice === "rock")
-      ) {
-        return 1; // Player wins
-      } else {
-        return -1; // Computer wins
-      }
-    }
+      function who_wins() {
+        let p_choice = player.choice;
+        let c_choice = computer.choice;
 
-    function update_game_result(result) {
-      let separator_text = document.getElementById("separator-text");
-      if (result === 0) {
-        separator_text.innerHTML = "It's a tie";
-      } else if (result === 1) {
-        separator_text.innerHTML = "Player wins";
-        player.increment_score();
-      } else {
-        separator_text.innerHTML = "Computer wins";
-        player.decrement_life();
-        // increment computer score
-        computer.increment_score();
+        if (p_choice === c_choice) {
+          return 0; // It's a tie
+        }
+
+        if (
+          (p_choice === "rock" && c_choice === "scissors") ||
+          (p_choice === "scissors" && c_choice === "paper") ||
+          (p_choice === "paper" && c_choice === "rock")
+        ) {
+          return 1; // Player wins
+        } else {
+          return -1; // Computer wins
+        }
       }
 
-      // Ensure that scores are valid
-      if (player.score < 0) {
-        // Floor to 0
-        player.score = 0;
-      } else if (player.score >= 3) {
-        // Max to 3
-        player.score = 3;
+      function update_game_result(result) {
+        let separator_text = document.getElementById("separator-text");
+        if (result === 0) {
+          separator_text.innerHTML = "It's a tie";
+        } else if (result === 1) {
+          separator_text.innerHTML = "Player wins";
+          player.increment_score();
+        } else {
+          separator_text.innerHTML = "Computer wins";
+          player.decrement_life();
+          // increment computer score
+          computer.increment_score();
+        }
+
+        // Ensure that scores are valid
+        if (player.score < 0) {
+          // Floor to 0
+          player.score = 0;
+        } else if (player.score >= 3) {
+          // Max to 3
+          player.score = 3;
+        }
+
+        // Update the player's score display
+        document.getElementById("player-score").innerText = player.score;
+        // update the player's life display
+        document.getElementById('player-life').innerHTML = player.life;
+    
+
+        // will displaying win or lose depending on current game scores ofcourse
+        if (player.score === 3 && computer.score < 3) {
+          let div = document.getElementsByClassName("winning-prompt");
+          div[0].style.display = "block";
+        } else if (computer.score === 3 && player.score < 3) {
+          let div = document.getElementsByClassName("losing-prompt");
+          div[0].style.display = "block";
+        }
       }
-
-      // Update the player's score display
-      document.getElementById("player-score").innerText = player.score;
-
-      // will displaying win or lose depending on current game scores ofcourse
-      if(player.score === 3 && computer.score < 3){
-      
-        let div = document.getElementsByClassName('winning-prompt');
-        div[0].style.display = 'block';
-    }
-    else if(computer.score === 3 && player.score < 3){
-      let div = document.getElementsByClassName('losing-prompt');
-      div[0].style.display = 'block';
-    }
-    }
-  </script>
-
-</body>
+    </script>
+  </body>
 </html>
