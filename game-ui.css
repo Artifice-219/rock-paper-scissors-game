@@ -5,6 +5,7 @@ body {
     justify-content: center;
     min-height: 100vh; /* Use min-height instead of height for flexibility */
     background-color: greenyellow;
+    overflow: hidden;
   }
   
   .computer-side,
@@ -87,7 +88,36 @@ body {
     max-width: 600px; /* Limit max width */
     border-radius: 20px;
   }
-  
+
+  .winning-img,
+  .losing-img{
+
+    position: relative;
+   height: 60%;
+   width: 80%;
+   background-color: red;
+   margin: 5px;
+   left: 50px;
+
+  }
+
+  .winning-img,
+  .losing-img img{
+
+    object-fit: contain;
+    height:100%;
+    width: 100%;
+    object-position: center;
+
+  }
+   
+  .close-view{
+
+    position:relative;
+    left: 88%;
+    font-size: 4rem;
+    
+  }
   .heart-image {
     position: absolute;
     top: 115px;
